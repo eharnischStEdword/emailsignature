@@ -608,11 +608,11 @@
                 </tr>
                 <tr>
                     <td style="font-size:13px;">
-                        <strong>P:</strong> <a href="tel:${loc.phone.replace(/[^\d]/g, '')}" style="color:#333333;text-decoration:none;">${phoneWithExt}</a>
+                        <strong>P:</strong> <a href="tel:${loc.phone.replace(/[^\d]/g, '')}" target="_blank" style="color:#333333;text-decoration:none;">${phoneWithExt}</a>
                     </td>
                 </tr>
                 ${loc.fax ? `<tr><td style="font-size:13px;"><strong>F:</strong> ${loc.fax}</td></tr>` : ''}
-                ${email ? `<tr><td style="font-size:13px;"><strong>E:</strong> <a href="mailto:${email}" style="color:${CONFIG.primaryColor};text-decoration:none;">${email}</a></td></tr>` : ''}
+                ${email ? `<tr><td style="font-size:13px;"><strong>E:</strong> <a href="mailto:${email}" target="_blank" style="color:${CONFIG.primaryColor};text-decoration:none;">${email}</a></td></tr>` : ''}
                 <tr>
                     <td style="font-size:13px;padding-bottom:8px;">
                         <strong>W:</strong> ${websitesHTML}
