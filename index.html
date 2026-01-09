@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Signature Generator | St. Edward Church & School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a8a;
+            --accent: #c9a227;
+            --bg: #f8f7f4;
+            --card-bg: #ffffff;
+            --text: #2c2c2c;
+            --text-muted: #666666;
+            --border: #e0ddd5;
+            --success: #2e7d32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.85;
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 800px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .preview-area {
+            background: #fafafa;
+            border: 1px dashed var(--border);
+            border-radius: 4px;
+            padding: 1.5rem;
+            min-height: 180px;
+        }
+
+        .signature-preview {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333333;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.25rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .instructions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .instructions h3 {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .instructions ol {
+            margin-left: 1.25rem;
+        }
+
+        .instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .instructions code {
+            background: #f0f0f0;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .hidden-signature {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Email Signature Generator</h1>
+        <p>St. Edward Church & School</p>
+    </header>
+
+    <main class="container">
+        <div class="layout">
+            <div class="card">
+                <div class="card-header">Your Information</div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" placeholder="John">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Smith">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="credentials">Credentials (optional)</label>
+                        <input type="text" id="credentials" placeholder="Ph.D., M.Ed., etc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Title / Position</label>
+                        <input type="text" id="title" placeholder="Principal">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="department">Department / Ministry</label>
+                        <select id="department">
+                            <option value="">Select a department...</option>
+                            <option value="School Administration">School Administration</option>
+                            <option value="School Faculty">School Faculty</option>
+                            <option value="Parish Office">Parish Office</option>
+                            <option value="Religious Education">Religious Education</option>
+                            <option value="Youth Ministry">Youth Ministry</option>
+                            <option value="Music Ministry">Music Ministry</option>
+                            <option value="Facilities">Facilities</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" placeholder="(555) 123-4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="jsmith@stedward.org">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Preview</div>
+                <div class="card-body">
+                    <div class="preview-area">
+                        <div id="signaturePreview" class="signature-preview"></div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-primary" onclick="copySignature()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            Copy Signature
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="downloadSignature()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Download HTML
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Use Your Signature</h3>
+            <ol>
+                <li>Fill out the form with your information. The preview updates automatically.</li>
+                <li>Click <strong>Copy Signature</strong> to copy it to your clipboard.</li>
+                <li>In Outlook: Go to <code>File → Options → Mail → Signatures</code>, create a new signature, and paste.</li>
+                <li>In Gmail: Go to <code>Settings → See all settings → General → Signature</code>, and paste.</li>
+                <li>If pasting doesn't work correctly in Outlook for Windows, use <strong>Download HTML</strong> and save the file to your Signatures folder.</li>
+            </ol>
+        </div>
+    </main>
+
+    <div id="toast" class="toast">Signature copied to clipboard!</div>
+
+    <!-- Hidden container for copying rich HTML -->
+    <div id="hiddenSignature" class="hidden-signature"></div>
+
+    <script>
+        // Configuration - UPDATE THESE VALUES
+        const CONFIG = {
+            logoUrl: 'https://via.placeholder.com/120x60?text=Logo', // Replace with actual logo URL
+            orgName: 'St. Edward Church & School',
+            address: '123 Main Street',
+            cityStateZip: 'Anytown, ST 12345',
+            website: 'www.stedward.org',
+            websiteUrl: 'https://www.stedward.org',
+            primaryColor: '#1e3a5f',
+            // Social links (leave empty string to hide)
+            facebook: 'https://facebook.com/stedward',
+            twitter: '',
+            instagram: ''
+        };
+
+        // Get form elements
+        const inputs = {
+            firstName: document.getElementById('firstName'),
+            lastName: document.getElementById('lastName'),
+            credentials: document.getElementById('credentials'),
+            title: document.getElementById('title'),
+            department: document.getElementById('department'),
+            phone: document.getElementById('phone'),
+            email: document.getElementById('email')
+        };
+
+        // Update preview on any input change
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updatePreview);
+            input.addEventListener('change', updatePreview);
+        });
+
+        function generateSignatureHTML() {
+            const firstName = inputs.firstName.value.trim();
+            const lastName = inputs.lastName.value.trim();
+            const credentials = inputs.credentials.value.trim();
+            const title = inputs.title.value.trim();
+            const department = inputs.department.value;
+            const phone = inputs.phone.value.trim();
+            const email = inputs.email.value.trim();
+
+            const fullName = [firstName, lastName].filter(Boolean).join(' ');
+            const nameWithCreds = credentials ? `${fullName}, ${credentials}` : fullName;
+
+            // Build social icons HTML
+            let socialHTML = '';
+            if (CONFIG.facebook || CONFIG.twitter || CONFIG.instagram) {
+                const socialIcons = [];
+                if (CONFIG.facebook) {
+                    socialIcons.push(`<a href="${CONFIG.facebook}" style="text-decoration:none;margin-right:8px;"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" width="20" height="20" style="border:0;"></a>`);
+                }
+                if (CONFIG.twitter) {
+                    socialIcons.push(`<a href="${CONFIG.twitter}" style="text-decoration:none;margin-right:8px;"><img src="https://cdn-icons-png.flaticon.com/24/733/733579.png" alt="Twitter" width="20" height="20" style="border:0;"></a>`);
+                }
+                if (CONFIG.instagram) {
+                    socialIcons.push(`<a href="${CONFIG.instagram}" style="text-decoration:none;margin-right:8px;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram" width="20" height="20" style="border:0;"></a>`);
+                }
+                socialHTML = `
+                    <tr>
+                        <td style="padding-top:12px;">
+                            ${socialIcons.join('')}
+                        </td>
+                    </tr>
+                `;
+            }
+
+            return `
+<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;font-size:14px;line-height:1.4;color:#333333;">
+    <tr>
+        <td style="padding-right:15px;vertical-align:top;border-right:2px solid ${CONFIG.primaryColor};">
+            <img src="${CONFIG.logoUrl}" alt="${CONFIG.orgName}" width="120" style="display:block;border:0;">
+        </td>
+        <td style="padding-left:15px;vertical-align:top;">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td style="font-weight:bold;font-size:16px;color:${CONFIG.primaryColor};padding-bottom:2px;">
+                        ${nameWithCreds || 'Your Name'}
+                    </td>
+                </tr>
+                ${title ? `<tr><td style="padding-bottom:2px;">${title}</td></tr>` : ''}
+                ${department ? `<tr><td style="color:#666666;padding-bottom:8px;">${department}</td></tr>` : ''}
+                <tr>
+                    <td style="font-weight:bold;color:${CONFIG.primaryColor};padding-bottom:2px;">${CONFIG.orgName}</td>
+                </tr>
+                <tr>
+                    <td style="color:#666666;font-size:13px;">${CONFIG.address}</td>
+                </tr>
+                <tr>
+                    <td style="color:#666666;font-size:13px;padding-bottom:8px;">${CONFIG.cityStateZip}</td>
+                </tr>
+                ${phone ? `<tr><td style="font-size:13px;"><strong>P:</strong> <a href="tel:${phone.replace(/[^\d+]/g, '')}" style="color:#333333;text-decoration:none;">${phone}</a></td></tr>` : ''}
+                ${email ? `<tr><td style="font-size:13px;"><strong>E:</strong> <a href="mailto:${email}" style="color:${CONFIG.primaryColor};text-decoration:none;">${email}</a></td></tr>` : ''}
+                <tr>
+                    <td style="font-size:13px;"><strong>W:</strong> <a href="${CONFIG.websiteUrl}" style="color:${CONFIG.primaryColor};text-decoration:none;">${CONFIG.website}</a></td>
+                </tr>
+                ${socialHTML}
+            </table>
+        </td>
+    </tr>
+</table>
+            `.trim();
+        }
+
+        function generatePlainText() {
+            const firstName = inputs.firstName.value.trim();
+            const lastName = inputs.lastName.value.trim();
+            const credentials = inputs.credentials.value.trim();
+            const title = inputs.title.value.trim();
+            const department = inputs.department.value;
+            const phone = inputs.phone.value.trim();
+            const email = inputs.email.value.trim();
+
+            const fullName = [firstName, lastName].filter(Boolean).join(' ');
+            const nameWithCreds = credentials ? `${fullName}, ${credentials}` : fullName;
+
+            let lines = ['--'];
+            if (nameWithCreds) lines.push(nameWithCreds);
+            if (title) lines.push(title);
+            if (department) lines.push(department);
+            lines.push(CONFIG.orgName);
+            lines.push(CONFIG.address);
+            lines.push(CONFIG.cityStateZip);
+            if (phone) lines.push(phone);
+            if (email) lines.push(email);
+            lines.push(CONFIG.website);
+
+            return lines.join('\n');
+        }
+
+        function updatePreview() {
+            const preview = document.getElementById('signaturePreview');
+            preview.innerHTML = generateSignatureHTML();
+        }
+
+        function copySignature() {
+            const html = generateSignatureHTML();
+            const plainText = generatePlainText();
+
+            // Create a hidden container with the HTML
+            const hiddenDiv = document.getElementById('hiddenSignature');
+            hiddenDiv.innerHTML = html;
+
+            // Try to copy rich HTML (for email clients that support it)
+            const range = document.createRange();
+            range.selectNodeContents(hiddenDiv);
+            
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            try {
+                // Try modern clipboard API first
+                if (navigator.clipboard && window.ClipboardItem) {
+                    const blob = new Blob([html], { type: 'text/html' });
+                    const textBlob = new Blob([plainText], { type: 'text/plain' });
+                    const item = new ClipboardItem({
+                        'text/html': blob,
+                        'text/plain': textBlob
+                    });
+                    navigator.clipboard.write([item]).then(() => {
+                        showToast('Signature copied to clipboard!');
+                    }).catch(() => {
+                        // Fallback
+                        document.execCommand('copy');
+                        showToast('Signature copied to clipboard!');
+                    });
+                } else {
+                    // Fallback for older browsers
+                    document.execCommand('copy');
+                    showToast('Signature copied to clipboard!');
+                }
+            } catch (err) {
+                console.error('Copy failed:', err);
+                showToast('Copy failed. Try downloading instead.');
+            }
+
+            selection.removeAllRanges();
+        }
+
+        function downloadSignature() {
+            const html = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Email Signature</title>
+</head>
+<body>
+${generateSignatureHTML()}
+</body>
+</html>`;
+
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'signature.htm';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast('Signature downloaded!');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize preview
+        updatePreview();
+    </script>
+</body>
+</html>
