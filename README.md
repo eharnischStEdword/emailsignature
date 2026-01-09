@@ -1,51 +1,62 @@
 # Email Signature Generator
 
-A simple, client-side email signature generator for St. Edward Church & School.
+A client-side email signature generator for St. Edward Church & School staff.
 
-## Setup
+## Features
 
-1. Clone this repository
-2. Edit `index.html` and update the `CONFIG` object near the bottom of the file:
-   - `logoUrl`: URL to your logo image
-   - `orgName`: Organization name
-   - `address`: Street address
-   - `cityStateZip`: City, State ZIP
-   - `website`: Display URL
-   - `websiteUrl`: Full URL with https://
-   - `primaryColor`: Hex color for branding
-   - `facebook`, `twitter`, `instagram`: Social media URLs (leave empty to hide)
-
-3. Deploy to Render.com as a Static Site, or any other static hosting
-
-## Customization
-
-### Adding/Removing Form Fields
-
-Edit the HTML form in the left card, then update the corresponding JavaScript:
-- Add input to the `inputs` object
-- Update `generateSignatureHTML()` and `generatePlainText()` functions
-
-### Changing Departments
-
-Edit the `<select id="department">` dropdown options in the HTML.
-
-### Styling
-
-CSS variables at the top of the `<style>` block control the main colors of the generator interface (not the signature itself).
+- Church/School toggle (auto-switches phone, fax, and address)
+- Clergy titles (Fr., Dcn., Msgr., Sr., Br.) plus standard honorifics
+- Optional credentials field
+- Extension field for direct lines
+- Auto-includes both websites and social media links
+- Copy to clipboard or download HTML file
+- Live preview
 
 ## Deployment on Render.com
 
 1. Push to GitHub
 2. Go to render.com and create a new Static Site
 3. Connect your GitHub repo
-4. Set build command to empty (or just leave it)
-5. Set publish directory to `.` (root)
+4. Build command: leave empty
+5. Publish directory: `.`
 6. Deploy
 
-## Files
+## Configuration
 
-- `index.html` - The entire application (self-contained)
+The `CONFIG` object in the JavaScript section contains:
+
+- Logo URL
+- Phone numbers, addresses, fax for Church and School
+- Website URLs
+- Social media links
+- Brand colors
+
+To change any of these, edit the CONFIG object near line 280 in `index.html`.
+
+## Customization
+
+### Adding Titles/Honorifics
+
+Edit the `<select id="honorific">` dropdown in the HTML.
+
+### Changing Colors
+
+CSS variables at the top of the `<style>` block:
+- `--navy`: #003764
+- `--dark-green`: #005921
+- `--green`: #00843d
+- `--gold`: #daaa00
+- `--off-white`: #eef4f1
+
+### Social Icons
+
+Social icons are embedded as base64 SVGs in St. Edward green (#005921) for email client compatibility. The source SVG files are also in this repo:
+- `facebook-svgrepo-com.svg`
+- `instagram-svgrepo-com.svg`
+- `youtube-168-svgrepo-com.svg`
+
+To change them, update the `SOCIAL_ICONS` object in the JavaScript.
 
 ## Browser Support
 
-Works in all modern browsers. The copy-to-clipboard feature uses the modern Clipboard API with fallback for older browsers.
+Works in all modern browsers. Uses Clipboard API with fallback for older browsers.
