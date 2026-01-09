@@ -6,18 +6,21 @@
     <title>Email Signature Generator | St. Edward Church & School</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1e3a5f;
-            --primary-light: #2d5a8a;
-            --accent: #c9a227;
-            --bg: #f8f7f4;
-            --card-bg: #ffffff;
-            --text: #2c2c2c;
+            --primary: #005921;
+            --primary-dark: #004518;
+            --navy: #003764;
+            --green: #00843d;
+            --light-gold: #ddcc71;
+            --gold: #daaa00;
+            --bg: #eef4f1;
+            --white: #ffffff;
+            --text: #333333;
             --text-muted: #666666;
-            --border: #e0ddd5;
-            --success: #2e7d32;
+            --border: #c5d4c9;
+            --success: #005921;
         }
 
         * {
@@ -27,7 +30,7 @@
         }
 
         body {
-            font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
@@ -37,24 +40,32 @@
         .header {
             background: var(--primary);
             color: white;
-            padding: 2rem;
-            text-align: center;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom: 4px solid var(--light-gold);
         }
 
-        .header h1 {
-            font-family: 'Libre Baskerville', Georgia, serif;
-            font-size: 1.75rem;
+        .header-logo {
+            width: 80px;
+            height: auto;
+        }
+
+        .header-text h1 {
+            font-family: 'Merriweather', Georgia, serif;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
-        .header p {
-            opacity: 0.85;
-            font-size: 1rem;
+        .header-text p {
+            opacity: 0.9;
+            font-size: 0.95rem;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -66,26 +77,27 @@
             align-items: start;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 900px) {
             .layout {
                 grid-template-columns: 1fr;
             }
         }
 
         .card {
-            background: var(--card-bg);
+            background: var(--white);
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 12px rgba(0, 89, 33, 0.08);
             border: 1px solid var(--border);
+            overflow: hidden;
         }
 
         .card-header {
             padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            font-family: 'Libre Baskerville', Georgia, serif;
+            background: var(--primary);
+            color: white;
+            font-family: 'Merriweather', Georgia, serif;
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--primary);
         }
 
         .card-body {
@@ -108,6 +120,10 @@
             color: var(--text);
         }
 
+        label .required {
+            color: #c00;
+        }
+
         input, select {
             width: 100%;
             padding: 0.65rem 0.85rem;
@@ -120,8 +136,8 @@
 
         input:focus, select:focus {
             outline: none;
-            border-color: var(--primary-light);
-            box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 89, 33, 0.15);
         }
 
         input::placeholder {
@@ -134,12 +150,72 @@
             gap: 1rem;
         }
 
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .phone-section {
+            background: var(--bg);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .phone-section label {
+            margin-bottom: 0.75rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .radio-label input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .ext-field {
+            margin-top: 0.75rem;
+        }
+
+        .ext-field label {
+            font-weight: normal;
+            font-size: 0.85rem;
+        }
+
+        .ext-field input {
+            width: 120px;
+        }
+
+        .fax-notice {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .fax-notice.visible {
+            display: block;
+        }
+
         .preview-area {
             background: #fafafa;
             border: 1px dashed var(--border);
             border-radius: 4px;
             padding: 1.5rem;
-            min-height: 180px;
+            min-height: 220px;
         }
 
         .signature-preview {
@@ -176,13 +252,13 @@
         }
 
         .btn-primary:hover {
-            background: var(--primary-light);
+            background: var(--primary-dark);
         }
 
         .btn-secondary {
             background: white;
             color: var(--primary);
-            border: 1px solid var(--primary);
+            border: 2px solid var(--primary);
         }
 
         .btn-secondary:hover {
@@ -199,7 +275,7 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: var(--success);
+            background: var(--primary);
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 6px;
@@ -208,6 +284,7 @@
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.3s ease;
+            z-index: 1000;
         }
 
         .toast.show {
@@ -218,13 +295,14 @@
         .instructions {
             margin-top: 2rem;
             padding: 1.5rem;
-            background: var(--card-bg);
+            background: var(--white);
             border-radius: 8px;
             border: 1px solid var(--border);
+            box-shadow: 0 2px 12px rgba(0, 89, 33, 0.08);
         }
 
         .instructions h3 {
-            font-family: 'Libre Baskerville', Georgia, serif;
+            font-family: 'Merriweather', Georgia, serif;
             color: var(--primary);
             margin-bottom: 1rem;
             font-size: 1.1rem;
@@ -239,7 +317,7 @@
         }
 
         .instructions code {
-            background: #f0f0f0;
+            background: var(--bg);
             padding: 0.15rem 0.4rem;
             border-radius: 3px;
             font-size: 0.9em;
@@ -250,12 +328,21 @@
             left: -9999px;
             top: -9999px;
         }
+
+        .divider {
+            border: none;
+            border-top: 2px solid var(--gold);
+            margin: 1.5rem 0;
+        }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>Email Signature Generator</h1>
-        <p>St. Edward Church & School</p>
+        <img src="https://raw.githubusercontent.com/eharnischStEdword/emailsignature/main/STElogo.png" alt="St. Edward" class="header-logo">
+        <div class="header-text">
+            <h1>Email Signature Generator</h1>
+            <p>St. Edward Church & School</p>
+        </div>
     </header>
 
     <main class="container">
@@ -263,14 +350,29 @@
             <div class="card">
                 <div class="card-header">Your Information</div>
                 <div class="card-body">
-                    <div class="form-row">
+                    <div class="form-row-3">
                         <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" placeholder="John">
+                            <label for="honorific">Title <span class="required">*</span></label>
+                            <select id="honorific" required>
+                                <option value="">Select</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Dr.">Dr.</option>
+                                <option value="Fr.">Fr.</option>
+                                <option value="Dcn.">Dcn. (Permanent Deacon)</option>
+                                <option value="Rev. Mr.">Rev. Mr. (Transitional Deacon)</option>
+                                <option value="Msgr.">Msgr.</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" placeholder="Smith">
+                            <label for="firstName">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstName" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastName" placeholder="Smith" required>
                         </div>
                     </div>
 
@@ -280,33 +382,36 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="title">Title / Position</label>
-                        <input type="text" id="title" placeholder="Principal">
+                        <label for="position">Title / Position <span class="required">*</span></label>
+                        <input type="text" id="position" placeholder="Principal" required>
+                    </div>
+
+                    <hr class="divider">
+
+                    <div class="phone-section">
+                        <label>Phone <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="location" value="church" checked>
+                                Church (615) 833-5520
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="location" value="school">
+                                School (615) 833-5770
+                            </label>
+                        </div>
+                        <div class="ext-field">
+                            <label for="extension">Extension (optional)</label>
+                            <input type="text" id="extension" placeholder="123">
+                        </div>
+                        <div id="faxNotice" class="fax-notice">
+                            School Fax (615) 833-9739 will be included automatically.
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="department">Department / Ministry</label>
-                        <select id="department">
-                            <option value="">Select a department...</option>
-                            <option value="School Administration">School Administration</option>
-                            <option value="School Faculty">School Faculty</option>
-                            <option value="Parish Office">Parish Office</option>
-                            <option value="Religious Education">Religious Education</option>
-                            <option value="Youth Ministry">Youth Ministry</option>
-                            <option value="Music Ministry">Music Ministry</option>
-                            <option value="Facilities">Facilities</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" placeholder="(555) 123-4567">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="jsmith@stedward.org">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" placeholder="jsmith@stedward.org" required>
                     </div>
                 </div>
             </div>
@@ -350,35 +455,59 @@
 
     <div id="toast" class="toast">Signature copied to clipboard!</div>
 
-    <!-- Hidden container for copying rich HTML -->
     <div id="hiddenSignature" class="hidden-signature"></div>
 
     <script>
-        // Configuration - UPDATE THESE VALUES
+        // Configuration
         const CONFIG = {
-            logoUrl: 'https://via.placeholder.com/120x60?text=Logo', // Replace with actual logo URL
-            orgName: 'St. Edward Church & School',
-            address: '123 Main Street',
-            cityStateZip: 'Anytown, ST 12345',
-            website: 'www.stedward.org',
-            websiteUrl: 'https://www.stedward.org',
-            primaryColor: '#1e3a5f',
-            // Social links (leave empty string to hide)
-            facebook: 'https://facebook.com/stedward',
-            twitter: '',
-            instagram: ''
+            logoUrl: 'https://raw.githubusercontent.com/eharnischStEdword/emailsignature/main/STElogo.png',
+            primaryColor: '#005921',
+            goldColor: '#ddcc71',
+            locations: {
+                church: {
+                    phone: '(615) 833-5520',
+                    address: '188 Thompson Lane',
+                    cityStateZip: 'Nashville, TN 37211',
+                    fax: null
+                },
+                school: {
+                    phone: '(615) 833-5770',
+                    address: '190 Thompson Lane',
+                    cityStateZip: 'Nashville, TN 37211',
+                    fax: '(615) 833-9739'
+                }
+            },
+            websites: [
+                { display: 'stedward.org', url: 'https://stedward.org' },
+                { display: 'ses.stedward.org', url: 'https://ses.stedward.org' }
+            ],
+            socials: {
+                facebook: 'https://www.facebook.com/stedwardschool',
+                instagram: 'https://www.instagram.com/stedwardcommunity/',
+                youtube: 'https://www.youtube.com/@StEdwardChurchAndSchool'
+            }
+        };
+
+        // Social icon SVGs (inline for email compatibility)
+        const SOCIAL_ICONS = {
+            facebook: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjMTg3N0YyIj48cGF0aCBkPSJNMjQgMTIuMDczYzAtNi42MjctNS4zNzMtMTItMTItMTJzLTEyIDUuMzczLTEyIDEyYzAgNS45OSA0LjM4OCAxMC45NTQgMTAuMTI1IDExLjg1NHYtOC4zODVIMi4wNzh2LTMuNDdoMy4wNDdWOS40M2MwLTMuMDA3IDEuNzkyLTQuNjY5IDQuNTMzLTQuNjY5IDEuMzEyIDAgMi42ODYuMjM1IDIuNjg2LjIzNXYyLjk1M0gxNS44M2MtMS40OTEgMC0xLjk1Ni45MjUtMS45NTYgMS44NzR2Mi4yNWgzLjMyOGwtLjUzMiAzLjQ3aC0yLjc5NnY4LjM4NUMxOS42MTIgMjMuMDI3IDI0IDE4LjA2MiAyNCAxMi4wNzN6Ii8+PC9zdmc+',
+            instagram: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjRTQzMDVGIj48cGF0aCBkPSJNMTIgMi4xNjNjMy4yMDQgMCAzLjU4NC4wMTIgNC44NS4wNyAzLjI1Mi4xNDggNC43NzEgMS42OTEgNC45MTkgNC45MTkuMDU4IDEuMjY1LjA2OSAxLjY0NS4wNjkgNC44NDkgMCAzLjIwNS0uMDEyIDMuNTg0LS4wNjkgNC44NDktLjE0OSAzLjIyNS0xLjY2NCA0Ljc3MS00LjkxOSA0LjkxOS0xLjI2Ni4wNTgtMS42NDQuMDctNC44NS4wNy0zLjIwNCAwLTMuNTg0LS4wMTItNC44NDktLjA3LTMuMjYtLjE0OS00Ljc3MS0xLjY5OS00LjkxOS00LjkyLS4wNTgtMS4yNjUtLjA3LTEuNjQ0LS4wNy00Ljg0OSAwLTMuMjA0LjAxMy0zLjU4My4wNy00Ljg0OS4xNDktMy4yMjcgMS42NjQtNC43NzEgNC45MTktNC45MTkgMS4yNjYtLjA1NyAxLjY0NS0uMDY5IDQuODQ5LS4wNnptMC0yLjE2M2MtMy4yNTkgMC0zLjY2Ny4wMTQtNC45NDcuMDcyLTQuMzU4LjItNi43OCAyLjYxOC02LjkgNi45OC0uMDU5IDEuMjgxLS4wNzMgMS42ODktLjA3MyA0Ljk0OCAwIDMuMjU5LjAxNCAzLjY2OC4wNzIgNC45NDguMiA0LjM1OCAyLjYxOCA2Ljc4IDYuOTggNi45OCAxLjI4MS4wNTggMS42ODkuMDcyIDQuOTQ4LjA3MiAzLjI1OSAwIDMuNjY4LS4wMTQgNC45NDgtLjA3MiA0LjM1NC0uMiA2Ljc4Mi0yLjYxOCA2Ljk3OS02LjkuMDU5LTEuMjguMDczLTEuNjg5LjA3My00Ljk4IDAtMy4yNTktLjAxNC0zLjY2Ny0uMDcyLTQuOTQ3LS4xOTYtNC4zNTQtMi42MTctNi43OC02Ljk3OS02Ljk4LTEuMjgxLS4wNTktMS42OS0uMDczLTQuOTQ5LS4wNzN6bTAgNS44MzhjLTMuNDAzIDAtNi4xNjIgMi43NTktNi4xNjIgNi4xNjJzMi43NTkgNi4xNjMgNi4xNjIgNi4xNjMgNi4xNjItMi43NTkgNi4xNjItNi4xNjNjMC0zLjQwMy0yLjc1OS02LjE2Mi02LjE2Mi02LjE2MnptMCAxMC4xNjJjLTIuMjA5IDAtNC0xLjc5LTQtNHMxLjc5MS00IDQtNCA0IDEuNzkxIDQgNC0xLjc5MSA0LTQgNHptNi40MDYtMTEuODQ1Yy0uNzk2IDAtMS40NDEuNjQ1LTEuNDQxIDEuNDRzLjY0NSAxLjQ0IDEuNDQxIDEuNDRjLjc5NSAwIDEuNDM5LS42NDUgMS40MzktMS40NHMtLjY0NC0xLjQ0LTEuNDM5LTEuNDR6Ii8+PC9zdmc+',
+            youtube: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjRkYwMDAwIj48cGF0aCBkPSJNMjMuNDk4IDYuMTg2YTMuMDE2IDMuMDE2IDAgMCAwLTIuMTIyLTIuMTM2QzE5LjUwNSAzLjU0NSAxMiAzLjU0NSAxMiAzLjU0NXMtNy41MDUgMC05LjM3Ny41MDVBMy4wMTcgMy4wMTcgMCAwIDAgLjUwMiA2LjE4NkMwIDguMDcgMCAxMiAwIDEycy4wMDIgMy45My41MDIgNS44MTRhMy4wMTYgMy4wMTYgMCAwIDAgMi4xMjIgMi4xMzZjMS44NzEuNTA1IDkuMzc2LjUwNSA5LjM3Ni41MDVzNy41MDUgMCA5LjM3Ny0uNTA1YTMuMDE1IDMuMDE1IDAgMCAwIDIuMTIyLTIuMTM2QzI0IDE1LjkzIDI0IDEyIDI0IDEycy0uMDAyLTMuOTMtLjUwMi01LjgxNHpNOS41NDUgMTUuNTY4VjguNDMybDYuMjczIDMuNTY4LTYuMjczIDMuNTY4eiIvPjwvc3ZnPg=='
         };
 
         // Get form elements
         const inputs = {
+            honorific: document.getElementById('honorific'),
             firstName: document.getElementById('firstName'),
             lastName: document.getElementById('lastName'),
             credentials: document.getElementById('credentials'),
-            title: document.getElementById('title'),
-            department: document.getElementById('department'),
-            phone: document.getElementById('phone'),
+            position: document.getElementById('position'),
+            extension: document.getElementById('extension'),
             email: document.getElementById('email')
         };
+
+        const locationRadios = document.querySelectorAll('input[name="location"]');
+        const faxNotice = document.getElementById('faxNotice');
 
         // Update preview on any input change
         Object.values(inputs).forEach(input => {
@@ -386,45 +515,50 @@
             input.addEventListener('change', updatePreview);
         });
 
+        locationRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                faxNotice.classList.toggle('visible', radio.value === 'school');
+                updatePreview();
+            });
+        });
+
+        function getSelectedLocation() {
+            const selected = document.querySelector('input[name="location"]:checked');
+            return selected ? selected.value : 'church';
+        }
+
         function generateSignatureHTML() {
+            const honorific = inputs.honorific.value;
             const firstName = inputs.firstName.value.trim();
             const lastName = inputs.lastName.value.trim();
             const credentials = inputs.credentials.value.trim();
-            const title = inputs.title.value.trim();
-            const department = inputs.department.value;
-            const phone = inputs.phone.value.trim();
+            const position = inputs.position.value.trim();
+            const extension = inputs.extension.value.trim();
             const email = inputs.email.value.trim();
+            const location = getSelectedLocation();
+            const loc = CONFIG.locations[location];
 
-            const fullName = [firstName, lastName].filter(Boolean).join(' ');
+            const fullName = [honorific, firstName, lastName].filter(Boolean).join(' ');
             const nameWithCreds = credentials ? `${fullName}, ${credentials}` : fullName;
+            const phoneWithExt = extension ? `${loc.phone} ext. ${extension}` : loc.phone;
+
+            // Build websites HTML
+            const websitesHTML = CONFIG.websites.map(w => 
+                `<a href="${w.url}" style="color:${CONFIG.primaryColor};text-decoration:none;">${w.display}</a>`
+            ).join(' | ');
 
             // Build social icons HTML
-            let socialHTML = '';
-            if (CONFIG.facebook || CONFIG.twitter || CONFIG.instagram) {
-                const socialIcons = [];
-                if (CONFIG.facebook) {
-                    socialIcons.push(`<a href="${CONFIG.facebook}" style="text-decoration:none;margin-right:8px;"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" width="20" height="20" style="border:0;"></a>`);
-                }
-                if (CONFIG.twitter) {
-                    socialIcons.push(`<a href="${CONFIG.twitter}" style="text-decoration:none;margin-right:8px;"><img src="https://cdn-icons-png.flaticon.com/24/733/733579.png" alt="Twitter" width="20" height="20" style="border:0;"></a>`);
-                }
-                if (CONFIG.instagram) {
-                    socialIcons.push(`<a href="${CONFIG.instagram}" style="text-decoration:none;margin-right:8px;"><img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram" width="20" height="20" style="border:0;"></a>`);
-                }
-                socialHTML = `
-                    <tr>
-                        <td style="padding-top:12px;">
-                            ${socialIcons.join('')}
-                        </td>
-                    </tr>
-                `;
-            }
+            const socialHTML = `
+                <a href="${CONFIG.socials.facebook}" style="text-decoration:none;margin-right:8px;"><img src="${SOCIAL_ICONS.facebook}" alt="Facebook" width="20" height="20" style="border:0;vertical-align:middle;"></a>
+                <a href="${CONFIG.socials.instagram}" style="text-decoration:none;margin-right:8px;"><img src="${SOCIAL_ICONS.instagram}" alt="Instagram" width="20" height="20" style="border:0;vertical-align:middle;"></a>
+                <a href="${CONFIG.socials.youtube}" style="text-decoration:none;"><img src="${SOCIAL_ICONS.youtube}" alt="YouTube" width="20" height="20" style="border:0;vertical-align:middle;"></a>
+            `;
 
             return `
-<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;font-size:14px;line-height:1.4;color:#333333;">
+<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,sans-serif;font-size:14px;line-height:1.5;color:#333333;">
     <tr>
-        <td style="padding-right:15px;vertical-align:top;border-right:2px solid ${CONFIG.primaryColor};">
-            <img src="${CONFIG.logoUrl}" alt="${CONFIG.orgName}" width="120" style="display:block;border:0;">
+        <td style="padding-right:15px;vertical-align:top;border-right:3px solid ${CONFIG.goldColor};">
+            <img src="${CONFIG.logoUrl}" alt="St. Edward Church & School" width="100" style="display:block;border:0;">
         </td>
         <td style="padding-left:15px;vertical-align:top;">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -433,23 +567,33 @@
                         ${nameWithCreds || 'Your Name'}
                     </td>
                 </tr>
-                ${title ? `<tr><td style="padding-bottom:2px;">${title}</td></tr>` : ''}
-                ${department ? `<tr><td style="color:#666666;padding-bottom:8px;">${department}</td></tr>` : ''}
+                ${position ? `<tr><td style="color:#333333;padding-bottom:6px;">${position}</td></tr>` : ''}
                 <tr>
-                    <td style="font-weight:bold;color:${CONFIG.primaryColor};padding-bottom:2px;">${CONFIG.orgName}</td>
+                    <td style="font-weight:bold;color:${CONFIG.primaryColor};padding-bottom:2px;">St. Edward Church & School</td>
                 </tr>
                 <tr>
-                    <td style="color:#666666;font-size:13px;">${CONFIG.address}</td>
+                    <td style="color:#666666;font-size:13px;">${loc.address}</td>
                 </tr>
                 <tr>
-                    <td style="color:#666666;font-size:13px;padding-bottom:8px;">${CONFIG.cityStateZip}</td>
+                    <td style="color:#666666;font-size:13px;padding-bottom:6px;">${loc.cityStateZip}</td>
                 </tr>
-                ${phone ? `<tr><td style="font-size:13px;"><strong>P:</strong> <a href="tel:${phone.replace(/[^\d+]/g, '')}" style="color:#333333;text-decoration:none;">${phone}</a></td></tr>` : ''}
+                <tr>
+                    <td style="font-size:13px;">
+                        <strong>P:</strong> <a href="tel:${loc.phone.replace(/[^\d]/g, '')}" style="color:#333333;text-decoration:none;">${phoneWithExt}</a>
+                    </td>
+                </tr>
+                ${loc.fax ? `<tr><td style="font-size:13px;"><strong>F:</strong> ${loc.fax}</td></tr>` : ''}
                 ${email ? `<tr><td style="font-size:13px;"><strong>E:</strong> <a href="mailto:${email}" style="color:${CONFIG.primaryColor};text-decoration:none;">${email}</a></td></tr>` : ''}
                 <tr>
-                    <td style="font-size:13px;"><strong>W:</strong> <a href="${CONFIG.websiteUrl}" style="color:${CONFIG.primaryColor};text-decoration:none;">${CONFIG.website}</a></td>
+                    <td style="font-size:13px;padding-bottom:8px;">
+                        <strong>W:</strong> ${websitesHTML}
+                    </td>
                 </tr>
-                ${socialHTML}
+                <tr>
+                    <td style="padding-top:4px;">
+                        ${socialHTML}
+                    </td>
+                </tr>
             </table>
         </td>
     </tr>
@@ -458,27 +602,30 @@
         }
 
         function generatePlainText() {
+            const honorific = inputs.honorific.value;
             const firstName = inputs.firstName.value.trim();
             const lastName = inputs.lastName.value.trim();
             const credentials = inputs.credentials.value.trim();
-            const title = inputs.title.value.trim();
-            const department = inputs.department.value;
-            const phone = inputs.phone.value.trim();
+            const position = inputs.position.value.trim();
+            const extension = inputs.extension.value.trim();
             const email = inputs.email.value.trim();
+            const location = getSelectedLocation();
+            const loc = CONFIG.locations[location];
 
-            const fullName = [firstName, lastName].filter(Boolean).join(' ');
+            const fullName = [honorific, firstName, lastName].filter(Boolean).join(' ');
             const nameWithCreds = credentials ? `${fullName}, ${credentials}` : fullName;
+            const phoneWithExt = extension ? `${loc.phone} ext. ${extension}` : loc.phone;
 
             let lines = ['--'];
             if (nameWithCreds) lines.push(nameWithCreds);
-            if (title) lines.push(title);
-            if (department) lines.push(department);
-            lines.push(CONFIG.orgName);
-            lines.push(CONFIG.address);
-            lines.push(CONFIG.cityStateZip);
-            if (phone) lines.push(phone);
-            if (email) lines.push(email);
-            lines.push(CONFIG.website);
+            if (position) lines.push(position);
+            lines.push('St. Edward Church & School');
+            lines.push(loc.address);
+            lines.push(loc.cityStateZip);
+            lines.push(`P: ${phoneWithExt}`);
+            if (loc.fax) lines.push(`F: ${loc.fax}`);
+            if (email) lines.push(`E: ${email}`);
+            lines.push(`W: ${CONFIG.websites.map(w => w.display).join(' | ')}`);
 
             return lines.join('\n');
         }
@@ -492,11 +639,9 @@
             const html = generateSignatureHTML();
             const plainText = generatePlainText();
 
-            // Create a hidden container with the HTML
             const hiddenDiv = document.getElementById('hiddenSignature');
             hiddenDiv.innerHTML = html;
 
-            // Try to copy rich HTML (for email clients that support it)
             const range = document.createRange();
             range.selectNodeContents(hiddenDiv);
             
@@ -505,7 +650,6 @@
             selection.addRange(range);
 
             try {
-                // Try modern clipboard API first
                 if (navigator.clipboard && window.ClipboardItem) {
                     const blob = new Blob([html], { type: 'text/html' });
                     const textBlob = new Blob([plainText], { type: 'text/plain' });
@@ -516,12 +660,10 @@
                     navigator.clipboard.write([item]).then(() => {
                         showToast('Signature copied to clipboard!');
                     }).catch(() => {
-                        // Fallback
                         document.execCommand('copy');
                         showToast('Signature copied to clipboard!');
                     });
                 } else {
-                    // Fallback for older browsers
                     document.execCommand('copy');
                     showToast('Signature copied to clipboard!');
                 }
